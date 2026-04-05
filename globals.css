@@ -228,12 +228,18 @@ html:not(.light) .btn-ghost {
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
+  /* Pre-promote to GPU layer so appearing/disappearing is a cheap opacity change,
+     not a create/destroy of a composited layer */
+  will-change: opacity;
+  transform: translateZ(0);
+  transition: opacity 0.3s ease;
 }
 .orb-purple { background: radial-gradient(circle, rgba(124,92,252,0.35) 0%, transparent 70%); }
 .orb-orange { background: radial-gradient(circle, rgba(249,115,22,0.20) 0%, transparent 70%); }
 .orb-cyan   { background: radial-gradient(circle, rgba(34,211,238,0.18) 0%, transparent 70%); }
 
-html.light .orb { display: none; }
+/* Fade out instead of display:none — keeps GPU layer alive, no expensive re-composite */
+html.light .orb { opacity: 0; pointer-events: none; }
 
 /* ─── Tiptap ProseMirror ────────────────────────────────── */
 .ProseMirror {
@@ -303,6 +309,56 @@ html.light .orb { display: none; }
 html.light .profile-ring {
   box-shadow: 0 0 32px rgba(201,106,58,0.35), 0 0 60px rgba(201,106,58,0.15) !important;
 }
+
+/* ─── Navbar (CSS-only theming — no JS re-render on theme switch) ── */
+.navbar-bar {
+  background: rgba(10, 10, 15, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+html.light .navbar-bar {
+  background: rgba(250, 248, 245, 0.94);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.navbar-mobile-menu {
+  background: rgba(12, 12, 20, 0.97);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+html.light .navbar-mobile-menu {
+  background: #faf8f5;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.navbar-link {
+  color: rgba(255, 255, 255, 0.65);
+}
+html.light .navbar-link { color: #44403c; }
+
+.navbar-link:hover {
+  color: #7C5CFC;
+  background: rgba(124, 92, 252, 0.1);
+}
+html.light .navbar-link:hover {
+  color: #c96a3a;
+  background: rgba(201, 106, 58, 0.08);
+}
+
+.navbar-mobile-link { color: rgba(255, 255, 255, 0.75); }
+html.light .navbar-mobile-link { color: #44403c; }
+
+.navbar-mobile-logout { color: #f87171; }
+html.light .navbar-mobile-logout { color: #b45309; }
+
+.navbar-hamburger { color: rgba(255, 255, 255, 0.7); }
+html.light .navbar-hamburger { color: #78716c; }
 
 /* ─── Responsive helpers ─────────────────────────────────── */
 @media (max-width: 640px) {
