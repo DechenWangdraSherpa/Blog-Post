@@ -73,6 +73,7 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.2s ease, color 0.2s ease;
+  overflow-x: hidden;
 }
 
 /* ─── Headings ──────────────────────────────────────────── */
