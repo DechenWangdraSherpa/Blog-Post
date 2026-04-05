@@ -10,9 +10,11 @@ export default async function HomePage() {
     <div className="py-8 relative">
 
       {/* Decorative orbs — hidden automatically in light mode via CSS */}
-      <div className="orb orb-purple" style={{ width: 500, height: 500, top: -120, left: -180, opacity: 0.6 }} />
-      <div className="orb orb-orange" style={{ width: 320, height: 320, top: 80, right: -120, opacity: 0.5 }} />
-      <div className="orb orb-cyan"   style={{ width: 260, height: 260, top: 300, left: "40%", opacity: 0.3 }} />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+        <div className="orb orb-purple" style={{ width: 500, height: 500, top: -120, left: -180, opacity: 0.6 }} />
+        <div className="orb orb-orange" style={{ width: 320, height: 320, top: 80, right: -120, opacity: 0.5 }} />
+        <div className="orb orb-cyan"   style={{ width: 260, height: 260, top: 300, left: "40%", opacity: 0.3 }} />
+      </div>
 
       {/* Hero */}
       <section className="relative z-10 mb-16 pb-12" style={{ borderBottom: "1px solid var(--border)" }}>
